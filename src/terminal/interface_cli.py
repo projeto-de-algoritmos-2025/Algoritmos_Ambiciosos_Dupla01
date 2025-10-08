@@ -9,6 +9,13 @@ from terminal.papagaio_visual import (
     limpar_tela
 )
 
+from nucleo.huffman import (
+    construir_arvore_huffman,
+    gerar_codigos_huffman,
+    codificar_texto,
+    calcular_estatisticas
+)
+
 
 def mostrar_menu_principal():
     print("O que você gostaria de fazer?")
@@ -32,8 +39,7 @@ def obter_escolha_usuario():
 
 def processar_escolha(escolha):
     if escolha == "1":
-        mostrar_papagaio_falando("Em breve vou aprender seu texto!", "pensando")
-        input("\nPressione Enter para continuar...")
+        ensinar_texto_papagaio()
         
     elif escolha == "2":
         mostrar_papagaio_falando("Em breve vou ler arquivos!", "pensando")
@@ -51,6 +57,53 @@ def processar_escolha(escolha):
         input("\nPressione Enter para tentar novamente...")
     
     return True
+
+
+def ensinar_texto_papagaio():
+    limpar_tela()
+    cabecalho_projeto()
+    
+    mostrar_papagaio_falando("Qual texto você quer me ensinar?", "normal")
+    texto = input("\nDigite o texto: ")
+
+    if not texto:
+        mostrar_papagaio_falando("Você não digitou nada!", "pensando")
+        input("\nPressione Enter para voltar ao menu...")
+        return
+
+    arvore = construir_arvore_huffman(texto)
+    codigos = gerar_codigos_huffman(arvore)
+    texto_codificado = codificar_texto(texto, codigos)
+    stats = calcular_estatisticas(texto, texto_codificado, codigos)
+
+    limpar_tela()
+    cabecalho_projeto()
+    
+    mostrar_papagaio_falando("Aprendi um novo texto! Veja como eu o comprimi:", "feliz")
+    print()
+    
+    print("-" * 40)
+    print("Estatísticas da Compressão de Huffman")
+    print("-" * 40)
+    
+    print("\n1. Frequência dos Caracteres:")
+    for char, freq in sorted(stats["frequencias"].items()):
+        print(f"   '{char}': {freq} vez(es)")
+        
+    print("\n2. Códigos de Huffman Gerados:")
+    for char, codigo in sorted(stats["codigos"].items()):
+        print(f"   '{char}': {codigo}")
+        
+    print("\n3. Resultados da Compressão:")
+    print(f"   Tamanho original: {stats['bits_originais']} bits")
+    print(f"   Tamanho comprimido: {stats['bits_comprimidos']} bits")
+    print(f"   Taxa de compressão: {stats['taxa_compressao']:.2f}%")
+    
+    print("\n4. Texto Codificado:")
+    print(f"   {texto_codificado}")
+    print("-" * 40)
+    
+    input("\nPressione Enter para voltar ao menu...")
 
 
 def mostrar_demonstracao():
@@ -93,7 +146,7 @@ def executar_interface():
         limpar_tela()
         cabecalho_projeto()
         
-        mostrar_papagaio_falando("Olá! Sou o Papagaio Huffman!", "normal")
+        mostrar_papagaio_falando("Olá! Sou o Papagaio Huffy!", "normal")
         print()
         
         mostrar_menu_principal()
