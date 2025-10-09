@@ -39,6 +39,10 @@ def gerar_codigos_huffman(arvore):
 
     codigos = {}
     
+    if arvore.char is not None:
+        codigos[arvore.char] = "0"
+        return codigos
+    
     def _percorrer_arvore(no, codigo_atual):
         if no.char is not None:
             codigos[no.char] = codigo_atual

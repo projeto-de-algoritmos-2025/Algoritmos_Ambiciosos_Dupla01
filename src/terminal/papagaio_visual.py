@@ -53,8 +53,11 @@ def mostrar_papagaio_falando(texto, estado="normal"):
     else:
         ascii_art = papagaio_normal()
     
-    print(ascii_art + f'"{texto}"')
-    print("        |_|")
+    print(ascii_art + f'"{texto}"') 
+    if CORES_DISPONIVEL:
+        print(f"        {Fore.BLACK}{Style.DIM}|_|{Style.RESET_ALL}")
+    else:
+        print("        |_|")
 
 
 def limpar_tela():
