@@ -1,0 +1,5 @@
+papagaio papagaio papagaio
+algoritmo algoritmo
+huffman huffman huffman huffman
+compressao compressao compressao compressao compressao
+

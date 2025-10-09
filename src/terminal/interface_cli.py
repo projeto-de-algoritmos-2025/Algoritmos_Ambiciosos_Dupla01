@@ -16,6 +16,10 @@ from nucleo.huffman import (
     calcular_estatisticas
 )
 
+from utilidades.manipular_arquivo import (
+    ler_arquivo_texto,
+    listar_arquivos_texto,
+    obter_tamanho_arquivo)
 
 def mostrar_menu_principal():
     print("O que você gostaria de fazer?")
@@ -42,8 +46,7 @@ def processar_escolha(escolha):
         ensinar_texto_papagaio()
         
     elif escolha == "2":
-        mostrar_papagaio_falando("Em breve vou ler arquivos!", "pensando")
-        input("\nPressione Enter para continuar...")
+        carregar_arquivo_papagaio()
         
     elif escolha == "3":
         mostrar_demonstracao()
@@ -58,6 +61,69 @@ def processar_escolha(escolha):
     
     return True
 
+
+def carregar_arquivo_papagaio():
+    limpar_tela()
+    cabecalho_projeto()
+    
+    mostrar_papagaio_falando("Vou ler um arquivo para você!", "feliz")
+    print()
+    
+    arquivos_txt = listar_arquivos_texto()
+    
+    if not arquivos_txt:
+        mostrar_papagaio_falando("Nenhum arquivo encontrado na pasta exemplos!", "pensando")
+        input("\nPressione Enter para voltar ao menu...")
+        return
+    
+    print("Arquivos disponíveis:")
+    for i, arquivo in enumerate(arquivos_txt, 1):
+        caminho_completo = os.path.join("exemplos", arquivo)
+        tamanho = obter_tamanho_arquivo(caminho_completo)
+        print(f"   {i}. {arquivo} ({tamanho} bytes)")
+    print()
+    
+    try:
+        escolha = int(input("Escolha um arquivo (número): ")) - 1
+        nome_arquivo = arquivos_txt[escolha]
+        caminho_arquivo = os.path.join("exemplos", nome_arquivo)
+    except (ValueError, IndexError):
+        mostrar_papagaio_falando("Escolha inválida!", "pensando")
+        input("\nPressione Enter para voltar ao menu...")
+        return
+    
+    sucesso, texto = ler_arquivo_texto(caminho_arquivo)
+    
+    if not sucesso:
+        mostrar_papagaio_falando(f"Erro: {texto}", "pensando")
+        input("\nPressione Enter para voltar ao menu...")
+        return
+    
+    arvore = construir_arvore_huffman(texto)
+    codigos = gerar_codigos_huffman(arvore)
+    texto_codificado = codificar_texto(texto, codigos)
+    stats = calcular_estatisticas(texto, texto_codificado, codigos)
+    
+    limpar_tela()
+    cabecalho_projeto()
+    
+    mostrar_papagaio_falando(f"Analisei o arquivo '{nome_arquivo}'!", "feliz")
+    print()
+    
+    print(f"Arquivo: {nome_arquivo}")
+    print(f"Tamanho: {len(texto)} caracteres")
+    print(f"Caracteres únicos: {len(stats['frequencias'])}")
+    
+    print(f"\nCompressão:")
+    print(f"   Original: {stats['bits_originais']} bits")
+    print(f"   Comprimido: {stats['bits_comprimidos']} bits")
+    print(f"   Taxa: {stats['taxa_compressao']:.1f}%")
+    
+    print(f"\nTexto codificado:")
+    print(f"   {texto_codificado}")
+    
+    mostrar_papagaio_falando("Algoritmo ambicioso funcionando!", "feliz")
+    input("\nPressione Enter para voltar ao menu...")
 
 def ensinar_texto_papagaio():
     limpar_tela()
