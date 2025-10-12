@@ -8,10 +8,10 @@ except ImportError:
 
 def papagaio_normal():
     if CORES_DISPONIVEL:
-        return f"""    {Fore.YELLOW}..-..{Style.RESET_ALL}
-   {Fore.YELLOW}/o v o\\{Style.RESET_ALL}
-  {Fore.YELLOW}( /   \\ ){Style.RESET_ALL}
- {Fore.YELLOW}====w=w==={Style.RESET_ALL}{Fore.GREEN}< {Style.RESET_ALL}"""
+        return (f"    {Fore.RED}..-..{Style.RESET_ALL}\n"
+                f"   {Fore.GREEN}/{Style.RESET_ALL}o {Fore.YELLOW}v{Style.RESET_ALL} o{Fore.GREEN}\\{Style.RESET_ALL}\n"
+                f"  {Fore.GREEN}( /   \\ ){Style.RESET_ALL}\n"
+                f" {Fore.YELLOW}====w=w==={Style.RESET_ALL}{Fore.CYAN}< {Style.RESET_ALL}")
     else:
         return """    ..-..
    /o v o\\
@@ -21,10 +21,10 @@ def papagaio_normal():
 
 def papagaio_pensando():
     if CORES_DISPONIVEL:
-        return f"""    {Fore.YELLOW}..-..{Style.RESET_ALL}
-   {Fore.YELLOW}/? v ?\\{Style.RESET_ALL}
-  {Fore.YELLOW}( /   \\ ){Style.RESET_ALL}
- {Fore.YELLOW}====w=w==={Style.RESET_ALL}{Fore.BLUE}< {Style.RESET_ALL}"""
+        return (f"    {Fore.RED}..-..{Style.RESET_ALL}\n"
+                f"   {Fore.GREEN}/{Style.RESET_ALL}? {Fore.YELLOW}v{Style.RESET_ALL} ?{Fore.GREEN}\\{Style.RESET_ALL}\n"
+                f"  {Fore.GREEN}( /   \\ ){Style.RESET_ALL}\n"
+                f" {Fore.YELLOW}====w=w==={Style.RESET_ALL}{Fore.BLUE}< {Style.RESET_ALL}")
     else:
         return """    ..-..
    /? v ?\\
@@ -34,10 +34,10 @@ def papagaio_pensando():
 
 def papagaio_feliz():
     if CORES_DISPONIVEL:
-        return f"""    {Fore.YELLOW}..-..{Style.RESET_ALL}
-   {Fore.YELLOW}/^ v ^\\{Style.RESET_ALL}
-  {Fore.YELLOW}( /   \\ ){Style.RESET_ALL}
- {Fore.YELLOW}====w=w==={Style.RESET_ALL}{Fore.GREEN}< {Style.RESET_ALL}"""
+        return (f"    {Fore.RED}..-..{Style.RESET_ALL}\n"
+                f"   {Fore.GREEN}/{Style.RESET_ALL}^ {Fore.YELLOW}v{Style.RESET_ALL} ^{Fore.GREEN}\\{Style.RESET_ALL}\n"
+                f"  {Fore.GREEN}( /   \\ ){Style.RESET_ALL}\n"
+                f" {Fore.YELLOW}====w=w==={Style.RESET_ALL}{Fore.GREEN}< {Style.RESET_ALL}")
     else:
         return """    ..-..
    /^ v ^\\
@@ -55,7 +55,7 @@ def mostrar_papagaio_falando(texto, estado="normal"):
     
     print(ascii_art + f'"{texto}"') 
     if CORES_DISPONIVEL:
-        print(f"        {Fore.BLACK}{Style.DIM}|_|{Style.RESET_ALL}")
+        print(f"        {Fore.YELLOW}|_|{Style.RESET_ALL}")
     else:
         print("        |_|")
 
